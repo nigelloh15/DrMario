@@ -7,13 +7,9 @@
 # creation, and will indicate otherwise when it is not.
 #
 ######################## Bitmap Display Configuration ########################
-# - Unit width in pixels:       1
-# - Unit height in pixels:      1
-# - Display width in pixels:    32
 # - Display height in pixels:   32
 # - Base Address for Display:   0x10008000 ($gp)
 ##############################################################################
-
     .data
 ##############################################################################
 # Immutable Data
@@ -55,11 +51,124 @@ BOX_Y:
 BOX_ADDRESS:
   .word 0x1000840C
 
+BOX_BOTTOM_LEFT:
+  .word 0x10008e10
+
 PILL_POS1:
   .word 0x1000832C
   
 PILL_POS2:
   .word 0x100083AC
+
+SPEED:
+  .space 4
+GRAVITY_ROUND:
+  .space 4
+  
+PITCHES:
+    .word 76,76,76, 0,72,76,79, 0,67,0,   # ^E ^E ^E (rest) ^C ^E ^G (rest) G
+          72,0, 67,0, 64, 0,                   # ^C G E (rest)
+          69,71,70,69, 0,                # A B Bb A (rest)
+          67,76,79,81, 0,                # G ^E ^G ^A (rest)
+          77,79,76,72,74,71, 0,          # ^F ^G ^E ^C ^D B (rest)
+          
+          # Repeat Section with rests
+          72,67,64, 0,                   # ^C G E (rest)
+          69,71,70,69, 0,                # A B Bb A (rest)
+          67,76,79,81, 0,                # G ^E ^G ^A (rest)
+          77,79,76,72,74,71, 0,          # ^F ^G ^E ^C ^D B (rest)
+          
+          # Bridge with phrase pauses
+          79,78,77,74,76, 0,             # ^G ^F# ^F ^D ^E (rest)
+          67,69,72, 0,                   # G A ^C (rest)
+          69,72,74, 0,                   # A ^C ^D (rest)
+          79,78,77,74,76, 0,             # ^G ^F# ^F ^D ^E (rest)
+          84,84,84, 0,                   # *C *C *C (rest)
+          
+          # Final Section with cadence
+          72,72,72, 0,                   # ^C ^C ^C (rest)
+          72,74,76,72,69,67, 0,          # ^C ^D ^E ^C A G (rest)
+          72,72,72, 0,                   # ^C ^C ^C (rest)
+          72,74,76, 0,                   # ^C ^D ^E (rest)
+          
+          # Coda with final rest
+          67,64,60, 0                   # G E C (rest)
+
+DURATION:
+    .word 167,167,167,83,333,333,333,667,333,  # Triplets + 32nd rest + quarters
+          333,333, 333,333, 667, 83,                  # Quarters + eighth rest
+          333,333,333,667, 83, 
+          333,333,333,667, 83,
+          333,333,333,333,333,667, 83,
+          
+          # Repeat durations
+          333,333,667, 83,
+          333,333,333,667, 83,
+          333,333,333,667, 83,
+          333,333,333,333,333,667, 83,
+          
+          # Bridge timing
+          333,333,333,333,667, 83,
+          333,667,667, 83,
+          667,667,667, 83,
+          333,333,333,333,667, 83,
+          500,500,500, 83,
+          
+          # Final section
+          167,167,167, 83,
+          333,333,333,333,333,667, 83,
+          167,167,167, 83,
+          500,500,500, 83,
+          
+          # Coda
+          500,500,1000, 500,
+          
+PITCH_COUNT:
+  .space 4
+
+PLAY:
+  .space 4
+
+MARIO: .word
+    0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x795548, 0x000000,
+    0x000000, 0x000000, 0x000000, 0x000000, 0x795548, 0x795548, 0x795548, 0x795548, 0x795548, 0x9E9E9E, 0xFFFFFF, 0x795548, 0x000000,
+    0x000000, 0x000000, 0x000000, 0x3F51B5, 0x3F51B5, 0x3F51B5, 0x3F51B5, 0x3F51B5, 0x3F51B5, 0x9E9E9E, 0xFFFFFF, 0x000000, 0x000000,
+    0x000000, 0x000000, 0x000000, 0x795548, 0x795548, 0x795548, 0xFFCC80, 0xFFCC80, 0x000000, 0xFFCC80, 0x000000, 0x000000, 0x000000,
+    0x000000, 0x000000, 0x795548, 0xFFCC80, 0x795548, 0xFFCC80, 0xFFCC80, 0xFFCC80, 0x000000, 0xFFCC80, 0xFFCC80, 0xFFCC80, 0x000000,
+    0x000000, 0x000000, 0x795548, 0xFFCC80, 0x795548, 0x795548, 0xFFCC80, 0xFFCC80, 0xFFCC80, 0x000000, 0xFFCC80, 0xFFCC80, 0xFFCC80,
+    0x000000, 0x000000, 0x795548, 0x795548, 0xFFCC80, 0xFFCC80, 0xFFCC80, 0xFFCC80, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000,
+    0x000000, 0x000000, 0x000000, 0x000000, 0xFFCC80, 0xFFCC80, 0xFFCC80, 0xFFCC80, 0xFFCC80, 0xFFCC80, 0xFFCC80, 0x000000, 0x000000,
+    0x000000, 0x000000, 0x000000, 0xFFFFFF, 0xFFFFFF, 0x607D8B, 0xFFFFFF, 0xF44336, 0xF44336, 0x000000, 0x000000, 0x000000, 0x000000,
+    0x000000, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0x607D8B, 0xF44336, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0x000000,
+    0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0x607D8B, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF,
+    0x607D8B, 0x607D8B, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0x607D8B, 0x607D8B, 0xFFFFFF, 0xFFFFFF, 0x607D8B, 0x607D8B,
+    0x9E9E9E, 0x9E9E9E, 0x9E9E9E, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0x9E9E9E, 0x9E9E9E, 0x9E9E9E,
+    0x9E9E9E, 0x9E9E9E, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0x9E9E9E, 0x9E9E9E,
+    0x000000, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0x000000, 0x000000,
+    0x000000, 0x000000, 0x3F51B5, 0x3F51B5, 0x3F51B5, 0x000000, 0x000000, 0x000000, 0x3F51B5, 0x3F51B5, 0x3F51B5, 0x000000, 0x000000,
+    0x000000, 0x795548, 0x795548, 0x795548, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x795548, 0x795548, 0x795548, 0x000000,
+    0x795548, 0x795548, 0x795548, 0x795548, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x795548, 0x795548, 0x795548, 0x795548
+    
+MARIO_START:
+  .word 0x100086CC
+
+PAUSED_WORD:
+  .word
+  0xffffff, 0xffffff, 0xffffff, 0x000000, 0xffffff, 0xffffff, 0xffffff, 0x000000, 0xffffff, 0x000000, 0xffffff, 0x000000, 0xffffff, 0xffffff, 0xffffff, 0x000000, 0xffffff, 0xffffff, 0xffffff, 0x000000, 0xffffff, 0xffffff, 0x000000,
+  0xffffff, 0x000000, 0xffffff, 0x000000, 0xffffff, 0x000000, 0xffffff, 0x000000, 0xffffff, 0x000000, 0xffffff, 0x000000, 0xffffff, 0x000000, 0x000000, 0x000000, 0xffffff, 0x000000, 0x000000, 0x000000, 0xffffff, 0x000000, 0xffffff,
+  0xffffff, 0xffffff, 0xffffff, 0x000000, 0xffffff, 0xffffff, 0xffffff, 0x000000, 0xffffff, 0x000000, 0xffffff, 0x000000, 0xffffff, 0xffffff, 0xffffff, 0x000000, 0xffffff, 0xffffff, 0x000000, 0x000000, 0xffffff, 0x000000, 0xffffff,
+  0xffffff, 0x000000, 0x000000, 0x000000, 0xffffff, 0x000000, 0xffffff, 0x000000, 0xffffff, 0x000000, 0xffffff, 0x000000, 0x000000, 0x000000, 0xffffff, 0x000000, 0xffffff, 0x000000, 0x000000, 0x000000, 0xffffff, 0x000000, 0xffffff,
+  0xffffff, 0x000000, 0x000000, 0x000000, 0xffffff, 0x000000, 0xffffff, 0x000000, 0xffffff, 0xffffff, 0xffffff, 0x000000, 0xffffff, 0xffffff, 0xffffff, 0x000000, 0xffffff, 0xffffff, 0xffffff, 0x000000, 0xffffff, 0xffffff, 0x000000,
+
+PAUSE_LOCATION:
+  .word 0x10008090
+
+NEXT_PILL_LOCATION:
+  .word 0x10008464
+
+# Place to store links of pills
+LINKS:
+  .space 4096
 
 ##############################################################################
 # Mutable Data
@@ -82,6 +191,104 @@ PILL_POS2:
 .end_macro
 
 j main
+
+draw_paused:
+
+  push()
+  sw $ra, 0($sp)
+
+  jal play_sound
+
+  la $t3, PAUSED_WORD
+  lw $t4, PAUSE_LOCATION
+
+  li $t1, 0
+  draw_paused_column:
+    beq $t1, 5, draw_paused_column_end
+    
+    li $t2, 0
+    draw_paused_row:
+      beq $t2, 23, draw_paused_row_end
+
+      lw $t5, 0($t3)
+      sw $t5, 0($t4)
+
+      addi $t3, $t3, 4
+      addi $t4, $t4, 4
+      
+      addi $t2, $t2, 1
+      j draw_paused_row
+    draw_paused_row_end:
+
+    subi $t4, $t4, 92
+    addi $t4, $t4, 128
+    addi $t1, $t1, 1
+    j draw_paused_column
+  draw_paused_column_end:
+
+  lw $ra, 0($sp)
+  pop()
+  jr $ra
+draw_paused_end:
+
+remove_paused:
+  
+  lw $t4, PAUSE_LOCATION
+  
+  li $t1, 0
+  remove_paused_column:
+    beq $t1, 5, remove_paused_column_end
+    
+    li $t2, 0
+    remove_paused_row:
+      beq $t2, 23, remove_paused_row_end
+
+      sw $zero, 0($t4)
+
+      addi $t3, $t3, 4
+      addi $t4, $t4, 4
+      
+      addi $t2, $t2, 1
+      j remove_paused_row
+    remove_paused_row_end:
+
+    subi $t4, $t4, 92
+    addi $t4, $t4, 128
+    addi $t1, $t1, 1
+    j remove_paused_column
+  remove_paused_column_end:
+
+  jr $ra
+remove_paused_end:
+
+# Play sound
+play_sound:
+  li $v0, 31
+  li $a0, 60
+  li $a1, 100
+  li $a2, 10
+  li $a3, 50
+  syscall
+  jr $ra
+play_sound_end:
+
+# Gravity Function
+gravity:
+
+  addi $s7, $s7, 128
+  addi $s6, $s6, 128
+
+  addi $t1, $s7, 128
+  addi $t2, $s6, 128
+
+  lw $t1, 0($t1)
+  lw $t2, 0($t2)
+
+  bne $t1, $zero, landed  
+  bne $t2, $zero, landed  
+
+  jr $ra
+end_gravity: 
 
 # Functinon to check row
 # - $a0 Memory address of starting pixel
@@ -144,9 +351,35 @@ delete_row:
       beq $t1, $a1, delete_row_loop_end
 
       sw $t2, 0($a0)
+
+      # Removing Link
+      la $t5, LINKS
+      lw $t4, ADDR_DSPL
+
+      sub $t4, $a0, $t4
+      add $t5, $t5, $t4
+
+      lw $t6, 0($t5)
+
+      # Setting link to zero
+      sw $zero, 0($t5)
+
+      # Checking if virus or no link
+      li $t3, -1
+      beq $t6, $t3, row_no_link
+      beq $t6, $zero, row_no_link
+
+      row_link:
+
+        # Going to linked element and setting it to zero
+        add $t5, $t5, $t6
+        sw $zero, 0($t5)
+
+      row_no_link:
+      
       addi $a0, $a0, 4
       addi $t1, $t1, 1
-      
+
       j delete_row_loop
     delete_row_loop_end:
 
@@ -213,6 +446,32 @@ delete_column:
       beq $t1, $a1, delete_column_loop_end
 
       sw $t2, 0($a0)
+
+      # Removing Link
+      la $t5, LINKS
+      lw $t4, ADDR_DSPL
+
+      sub $t4, $a0, $t4
+      add $t5, $t5, $t4
+
+      lw $t6, 0($t5)
+
+      # Setting link to zero
+      sw $zero, 0($t5)
+      
+      # Checking if it is a virus or has no link   
+      li $t3, -1
+      beq $t6, $zero, column_no_link
+      beq $t6, $t3, column_no_link
+
+      column_link:
+
+        # Going to linked element and setting it to zero
+        add $t5, $t5, $t6
+        sw $zero, 0($t5)
+
+      column_no_link:
+        
       addi $a0, $a0, 128
       addi $t1, $t1, 1
       
@@ -223,78 +482,255 @@ delete_column:
 delete_column_end:
 
 # Function to drop the blocks above
-# - $a0 Starting position
-# - $a1 Width of drop
+# - $v0 - 1 if dropped something
 drop:
 
-  lw $a0, 0($sp)
-  pop()
-  lw $a1, 0($sp)
-  pop()
+  push()
+  sw $ra, 0($sp)
+  
+  lw $t0, BOX_BOTTOM_LEFT
+  # Move up one row as bottom row doesnt need to drop
+  subi $t0, $t0, 128
 
-  add $t4, $a0, $zero 
-  add $t1, $zero, $zero # loop constant
-  drop_loop:
-    beq $t1, $a1, drop_loop_end
+  li $t1, 0
+  li $s0, 0
+  drop_column_loop:
+    beq $t1, 19, drop_column_loop_end
 
-    # calculate how far down to go
-    add $t5, $t4, $zero
-    down_length_loop:
-      lw $t3, BLACK 
-      bne $t5, $t3, down_length_loop_end
-      addi $t5, $t5, 128 
-    down_length_loop_end:
+    li $t2, 0
+    drop_row_loop:
+      beq $t2, 15, drop_row_loop_end
 
-    # If $t5 not moved, dont change anything
-    beq $t5, $t4, copy_color_to_bottom_done
-    # copy column into down location 
-    subi $t4, $t4, 128
-    copy_color_to_bottom:
-
-      lw $t2, 0($t4)
-      beq $t2, $a3, copy_color_to_bottom_done
+      # Don't drop if it is black on that pixel
+      lw $t5, 0($t0)
+      beq $t5, $zero, no_drop
       
-      sw $t2, 0($t5)
-      sw $t3, 0($t4)
+      # Get links
+      la $t9, LINKS
+      lw $t8, ADDR_DSPL
 
-      subi $t4, $t4, 128
-      subi $t5, $t5, 128
+      # Get corresponding link
+      sub $t6, $t0, $t8
+      add $t6, $t9, $t6
 
-      j copy_color_to_bottom
-    copy_color_to_bottom_done:
+      # Get value of link
+      lw $t5, 0($t6)
 
-    # Shift pointer right one
+      # If virus don't drop
+      beq $t5, -1, no_drop
+      
+      # If there is something below it
+      addi $t4, $t0, 128
+      lw $t7, 0($t4)
+      bne $t7, $zero, something_below
+      b nothing_below
+
+      something_below:
+        
+        # Check if its the linked pixel
+        add $t7, $t0, $t5
+        bne $t7, $t4, no_drop
+
+      nothing_below:
+
+      # Get linked pixel
+      add $t7, $t0, $t5
+      # Get pixel below linked one
+      addi $t7, $t7, 128
+
+      # If not black don't drop
+      lw $t8, 0($t7)
+      bne $t8, $zero, no_drop
+
+      # Move back to linked pixel
+      subi $t7, $t7, 128
+
+      drop_one:
+
+        # Add one to drop count
+        addi $s0, $s0, 1
+
+        # Drop blocks visually
+        lw $t3, 0($t0)
+        lw $t4, 0($t7)
+
+        sw $zero, 0($t0)
+        sw $zero, 0($t7)
+
+        addi $t0, $t0, 128
+        addi $t7, $t7, 128
+
+        sw $t3, 0($t0)
+        sw $t4, 0($t7)
+
+        # Drop links
+        
+        # Get linked pixel
+        add $t7, $t6, $t5
+        
+        lw $t3, 0($t6)
+        lw $t4, 0($t7)
+        
+        sw $zero, 0($t6)
+        sw $zero, 0($t7)
+
+        addi $t6, $t6, 128
+        addi $t7, $t7, 128
+
+        sw $t3, 0($t6)
+        sw $t4, 0($t7)
+        
+      no_drop:
+        
+      # Go to next item in row
+      addi $t0, $t0, 4
+
+      # Iterate to +1 $t2
+      addi $t2, $t2, 1
+      j drop_row_loop
+    drop_row_loop_end:
+
+    # Go up to next row
+    # Go back to 0th item
+    subi $t0, $t0, 60 # (15 * 4)
+    # Go up to next row
+    subi $t0, $t0, 128
+
+    # Iterate to +1 $t1
     addi $t1, $t1, 1
-    sll $t5, $t1, 2
-    add $t4, $a0, $t5
-   
-    j drop_loop
-  drop_loop_end:
+    j drop_column_loop
+  drop_column_loop_end:
+
+  beq $s0, $zero, nothing_dropped
+
+  some_dropped:
+
+    jal drop
+
+  nothing_dropped:
+    
+  lw $ra, 0($sp)
+  pop()
 
   jr $ra
 drop_end:
 
+# Check Delete & Drop
+
+check_delete_and_drop:
+
+  # Push register onto stack
+  push()
+  sw $ra, 0($sp)
+
+  # Get bottom left corner
+  lw $t0, BOX_BOTTOM_LEFT
+
+  # Delete Counter
+  li $t5, 0
+  
+  li $t1, 0
+  check_delete_drop_column:
+    beq $t1, 20, check_delete_drop_column_end
+
+    # Save loop variable
+    push()
+    sw $t1, 0($sp)
+
+    li $t2, 0
+    check_delete_drop_row:
+      beq $t2, 15, check_delete_drop_row_end
+
+      # Save loop variable
+      push()
+      sw $t2, 0($sp)
+      
+      # Save counter
+      push()
+      sw $t5, 0($sp)
+
+      push()
+      sw $t0, 0($sp)
+
+      jal check_and_delete
+
+      lw $t5, 0($sp)
+      pop()
+
+      add $t5, $t5, $v0
+
+      # Move pointer
+      addi $t0, $t0, 4
+      
+      # Get loop variable back
+      lw $t2, 0($sp)
+      pop()
+      
+      addi $t2, $t2, 1
+      j check_delete_drop_row
+    check_delete_drop_row_end:
+
+    # Move pointer back to start column
+    subi $t0, $t0, 60
+
+    # Move pointer up one row
+    subi $t0, $t0, 128
+    
+    # Get loop variable back
+    lw $t1, 0($sp)
+    pop()
+
+    addi $t1, $t1, 1
+    j check_delete_drop_column
+  check_delete_drop_column_end:
+
+  beq $t5, $zero, no_drop_needed
+  drop_needed:
+    
+    jal drop 
+    jal check_delete_and_drop
+    
+  no_drop_needed:
+
+
+  lw $ra 0($sp)
+  pop()
+  
+  jr $ra 
+check_delete_and_drop_end:
+
 # Function to check for line of 4 of the same color and delete
+# - $a0 - Location of pixel
+# - $v0 - 1 if deletion, 0 if no deletion
 check_and_delete:
+
+  # Variable to check if deleted anything
+  li $s1, 0
+
+  # Get location of pixel
+  lw $a0, 0($sp)
+  pop()
 
   # Check & Delete for Pixel 1 Row
   push()
   sw $ra, 0($sp)
 
+  # Get color of pixel
+  lw $t5, 0($a0)
+  # Check if pixel is black
+  beq $t5, $zero, black_check 
+  
+  # Put locatin of pixel back
   push()
-  sw $s5, 0($sp)
+  sw $a0, 0($sp)
+
+  push()
+  sw $t5, 0($sp)
   
   push()
-  sw $s7, 0($sp)
+  sw $a0, 0($sp)
 
   jal check_row
-
-  # Saving information into stack for dropping
-  push()
-  sw $v1, 0($sp)
-  push()
-  sw $v0, 0($sp)
-
 
   addi $t1, $zero, 4
   blt $v1, $t1, p1_no_more_delete_row
@@ -307,25 +743,29 @@ check_and_delete:
   sw $v0, 0($sp)
 
   jal delete_row
+
+  # Need to recurse
+  addi $s1, $s1, 1
   
   p1_no_more_delete_row:
 
   # Check & Delete for Pixel 1 Column
 
-  push()
-  sw $s5, 0($sp)
+  # Get pixel location back
+  lw $a0, 0($sp)
+  pop()
+
+  # Get color of pixel
+  lw $t5, 0($a0)
   
   push()
-  sw $s7, 0($sp)
+  sw $t5, 0($sp)
+  
+  push()
+  sw $a0, 0($sp)
 
   jal check_column
   
-  # Saving information into stack for dropping
-  push()
-  sw $v1, 0($sp)
-  push()
-  sw $v0, 0($sp)
-
   addi $t1, $zero, 4
   blt $v1, $t1, p1_no_more_delete_column
 
@@ -337,81 +777,30 @@ check_and_delete:
   sw $v0, 0($sp)
 
   jal delete_column
+  
+  # Need to recurse
+  addi $s1, $s1, 1
 
   p1_no_more_delete_column:
+
+  add $v0, $zero, $s1
+
+  la $t5, SPEED
+  lw $t4, 0($t5)
+  sll $s1, $s1, 2
+  sub $t4, $t4, $s1
+  bgt $t4, 15, not_min_speed
+
+  min_speed_reached:
+
+    li $t4, 15
+
+  not_min_speed:
+
+  sw $t4, 0($t5)
+
+  black_check:
   
-  # Check & Delete for Pixel 2 Row
-  push()
-  sw $s4, 0($sp)
-  
-  push()
-  sw $s6, 0($sp)
-
-  jal check_row
-  
-  # Saving information into stack for dropping
-  push()
-  sw $v1, 0($sp)
-  push()
-  sw $v0, 0($sp)
-
-  addi $t1, $zero, 4
-  blt $v1, $t1, p2_no_more_delete_row
-
-  p2_delete_a_row:
-    
-  push()
-  sw $v1, 0($sp)
-  push()
-  sw $v0, 0($sp)
-
-  jal delete_row
-  
-  p2_no_more_delete_row:
-
-  # Check & Delete for Pixel 2 Column
-
-  push()
-  sw $s4, 0($sp)
-  
-  push()
-  sw $s6, 0($sp)
-
-  jal check_column
-  
-  # Saving information into stack for dropping
-  push()
-  sw $v1, 0($sp)
-  push()
-  sw $v0, 0($sp)
-
-  addi $t1, $zero, 4
-  blt $v1, $t1, p2_no_more_delete_column
-
-  p2_delete_a_column:
-    
-  push()
-  sw $v1, 0($sp)
-  push()
-  sw $v0, 0($sp)
-
-  jal delete_column
-
-  p2_no_more_delete_column:
-
-  drop_everything:
-
-    pop()
-    pop()
-    pop()
-    pop()
-    pop()
-    pop()
-    pop()
-    pop()
-
-  drop_everything_end:
-    
   lw $ra, 0($sp) 
   pop()
 
@@ -493,8 +882,69 @@ draw_virus:
   v_col_done:
     
   sw $a0, 0($t5)
+
+  # Add Virus to the links board
+  la $t1, LINKS
+  lw $t2, ADDR_DSPL
+  sub $t3, $t5, $t2
+  add $t1, $t1, $t3
+
+  addi $t3, $zero, -1
+  sw $t3, 0($t1)
+  
   jr $ra
 draw_viruses_end:
+
+draw_pre_capsule:
+
+  lw $t1, NEXT_PILL_LOCATION
+  addi $t2, $t1, 128
+  
+  # Get Random Color of 3
+  li $v0, 42
+  li $a0, 0
+  li $a1, 3
+  syscall
+  beq $a0, 0, p1_col_0
+  beq $a0, 1, p1_col_1
+  beq $a0, 2, p1_col_2
+  
+  p1_col_0:
+    lw $t3, P_BLUE
+    b p1_done_col
+  p1_col_1:
+    lw $t3, P_PINK
+    b p1_done_col
+  p1_col_2:
+    lw $t3, P_PURP
+    b p1_done_col
+  p1_done_col:
+  sw $t3, 0($t1)
+
+  
+  # Get Random Color of 3
+  li $v0, 42
+  li $a0, 0
+  li $a1, 3
+  syscall
+  beq $a0, 0, p2_col_0
+  beq $a0, 1, p2_col_1
+  beq $a0, 2, p2_col_2
+  
+  p2_col_0:
+    lw $t3, P_BLUE
+    b p2_done_col
+  p2_col_1:
+    lw $t3, P_PINK
+    b p2_done_col
+  p2_col_2:
+    lw $t3, P_PURP
+    b p2_done_col
+  p2_done_col:
+  sw $t3, 0($t2)
+
+  jr $ra
+draw_pre_capsule_end:
 
 # Draw Capsule
 draw_capsule:
@@ -509,47 +959,13 @@ draw_capsule:
   bgt $t5, $t3, quit
   bgt $t4, $t3, quit
   
-  # Get Random Color of 3
-  li $v0, 42
-  li $a0, 0
-  li $a1, 3
-  syscall
-  beq $a0, 0, p1_col_0
-  beq $a0, 1, p1_col_1
-  beq $a0, 2, p1_col_2
-  
-  p1_col_0:
-    lw $s5, P_BLUE
-    b p1_done_col
-  p1_col_1:
-    lw $s5, P_PINK
-    b p1_done_col
-  p1_col_2:
-    lw $s5, P_PURP
-    b p1_done_col
-  p1_done_col:
-  sw $s5, 0($s7)
+  lw $t1, NEXT_PILL_LOCATION
+  addi $t2, $t1, 128
 
-  
-  # Get Random Color of 3
-  li $v0, 42
-  li $a0, 0
-  li $a1, 3
-  syscall
-  beq $a0, 0, p2_col_0
-  beq $a0, 1, p2_col_1
-  beq $a0, 2, p2_col_2
-  
-  p2_col_0:
-    lw $s4, P_BLUE
-    b p2_done_col
-  p2_col_1:
-    lw $s4, P_PINK
-    b p2_done_col
-  p2_col_2:
-    lw $s4, P_PURP
-    b p2_done_col
-  p2_done_col:
+  lw $s5, 0($t1)
+  lw $s4, 0($t2)
+
+  sw $s5, 0($s7)
   sw $s4, 0($s6)
 
   jr $ra
@@ -557,20 +973,49 @@ end_draw_capsule:
 
 # Keyboard Input Function
 keyboard_input:             # A key is pressed
+    push()
+    sw $ra, 0($sp)
+    
     lw $a0, 4($t0)          # Load second word from keyboard
     beq $a0, 0x71, quit     # Check if the key q was pressed
     beq $a0, 0x77, key_w     # Check if the key w was pressed
     beq $a0, 0x61, key_a     # Check if the key a was pressed
     beq $a0, 0x73, key_s     # Check if the key s was pressed
     beq $a0, 0x64, key_d     # Check if the key d was pressed
+    beq $a0, 0x70, key_p     # Check if the key p was pressed
 
     li $v0, 1               # ask system to print $a0
     syscall
 
+    lw $ra, 0($sp)
+    pop()
+    
     jr $ra
+
+  key_p:
+    
+    jal draw_paused
+
+    key_p_loop:
+      # 1a. Check if key has been pressed
+      lw $t0, ADDR_KBRD               # $t0 = base address for keyboard
+      lw $a0, 4($t0)
+      beq $a0, 0x63, key_p_loop_end
+
+      j key_p_loop
+    key_p_loop_end:
+
+    jal remove_paused
+
+    lw $ra, 0($sp)
+    pop()
+    jr $ra
+  key_p_end:
   
   # 1b. Check which key has been pressed
   key_w:
+    
+    jal play_sound
   
     # Check if P1 comes before B2
     bgt $s6, $s7, before_p2
@@ -605,6 +1050,9 @@ keyboard_input:             # A key is pressed
           bgt $t5, $t3, landed
           bgt $t4, $t3, landed
           
+          lw $ra, 0($sp)
+          pop()
+          
           jr $ra
   
         left_p2:
@@ -628,7 +1076,9 @@ keyboard_input:             # A key is pressed
       
           bgt $t5, $t3, landed
           bgt $t4, $t3, landed
-          
+
+          lw $ra, 0($sp)
+          pop()
           jr $ra
   
     after_p2:
@@ -660,6 +1110,8 @@ keyboard_input:             # A key is pressed
           bgt $t5, $t3, landed
           bgt $t4, $t3, landed
           
+          lw $ra, 0($sp)
+          pop()
           jr $ra
           
         right_p2:
@@ -684,11 +1136,15 @@ keyboard_input:             # A key is pressed
           bgt $t5, $t3, landed
           bgt $t4, $t3, landed
           
+          lw $ra, 0($sp)
+          pop()
           jr $ra
           
     jr $ra
   
     key_a:
+      
+      jal play_sound
   
       # Checking for collision
       lw $t3, BLACK
@@ -713,10 +1169,13 @@ keyboard_input:             # A key is pressed
       bgt $t5, $t3, landed
       bgt $t4, $t3, landed
       
+      lw $ra, 0($sp)
+      pop()
       jr $ra
       
     key_s:
        
+      jal play_sound
       
       addi $s7, $s7, 128
       addi $s6, $s6, 128
@@ -730,10 +1189,16 @@ keyboard_input:             # A key is pressed
   
       bgt $t5, $t3, landed
       bgt $t4, $t3, landed
-      
+     
+      lw $ra, 0($sp)
+      pop()
+
       jr $ra
       
     key_d:
+
+
+      jal play_sound
   
       # Checking for collision
       lw $t3, BLACK
@@ -757,6 +1222,9 @@ keyboard_input:             # A key is pressed
   
       bgt $t5, $t3, landed
       bgt $t4, $t3, landed
+
+      lw $ra, 0($sp)
+      pop()
       
       jr $ra
 end_keyboard_input:
@@ -840,6 +1308,38 @@ quit_end:
 # Run the game.
 main:
   
+    # Draw Dr. Mario
+    lw $t1, MARIO_START
+    la $t4, MARIO
+
+    li $t5, 0
+    li $t2, 0
+    mario_column_loop:
+      beq $t2, 18, mario_column_loop_end
+
+      li $t3, 0
+      mario_row_loop:
+        beq $t3, 13, mario_row_loop_end
+
+        lw $t5, 0($t4)
+        sw $t5, 0($t1)
+        
+        addi $t1, $t1, 4
+        addi $t4, $t4, 4
+        
+        addi $t3, $t3, 1
+
+        j mario_row_loop
+      mario_row_loop_end:
+
+      subi $t1, $t1, 52
+      addi $t1, $t1, 128
+      
+      addi $t2, $t2, 1
+
+      j mario_column_loop
+    mario_column_loop_end:
+      
     # Initialize starting location of bitmap
     lw $t0, ADDR_DSPL
 
@@ -985,19 +1485,116 @@ main:
     jal draw_rectangle
 
     # Draw First capsule
+    jal draw_pre_capsule
     jal draw_capsule
+    jal draw_pre_capsule
     jal draw_virus
     jal draw_virus
     jal draw_virus
+
+    # Gravity speed
+    la $t1, SPEED
+    li $t2, 60
+    sw $t2, 0($t1)
+
+    # Gravity loop variable
+    la $t1, GRAVITY_ROUND
+    li $t2, 0
+    sw $t2, 0($t1)
+
+    # Pitch and Duration
+    la $t3, PITCH_COUNT
+    li $t4, 0
+    sw $t4, 0($t3)
+
+    # Play constant
+    la $t1, PLAY
+    li $t2, 0
+    sw $t2, 0($t1)
     
     j game_loop
     
     
 game_loop:
+
+    la $t6, PLAY
+    la $t2, DURATION
+    lw $t7, 0($t6)
+
+    sll $t9, $t7, 2
+    add $t2, $t2, $t9
+    lw $t8, 0($t2)
+    srl $t8, $t8, 4
+    
+    blt $t7, $t8, sound_end
+    sound:
+    # Sound
+    la $t1, PITCHES
+    la $t2, DURATION
+
+    la $t3, PITCH_COUNT
+
+    lw $t5, 0($t3)
+
+    add $t1, $t1, $t5
+    lw $t1, 0($t1)
+    
+    add $t2, $t2, $t5
+    lw $t2, 0($t2)
+
+    li $v0, 31
+    add $a0, $t1, $zero
+    add $a1, $t2, $zero
+    li $a2, 0
+    li $a3, 50
+    syscall
+
+    addi $t5, $t5, 4
+
+    li $t7, 0
+
+    blt $t5, 392, no_reset_counter
+
+    li $t5, 0
+
+    no_reset_counter:
+    
+    sw $t5, 0($t3)
+
+    sound_end:
+
+    addi $t7, $t7, 1
+    sw $t7, 0($t6)
+
+    
+	# 4. Sleep
+    li $v0, 32
+    li $a0, 16
+    
+    syscall
+    
     # Clear old capsule
     lw $t5, BLACK
     sw $t5, 0($s7)
     sw $t5, 0($s6)
+
+    la $t3, GRAVITY_ROUND
+    lw $t1, 0($t3)
+    
+    # Get speed constant
+    la $t2, SPEED
+    lw $t2, 0($t2)
+    blt $t1, $t2, no_gravity_round
+    
+    gravity_round:
+      jal gravity
+      li $t1, 0
+    no_gravity_round:
+      
+    addi $t1, $t1, 1
+
+    sw $t1, 0($t3)
+    
     
     # 1a. Check if key has been pressed
     lw $t0, ADDR_KBRD               # $t0 = base address for keyboard
@@ -1018,26 +1615,41 @@ game_loop:
     # Redraw Capsule
     sw $s5, 0($s7)
     sw $s4, 0($s6)
-    
+
     b not_landed
     landed:
       # Redraw Capsule
       sw $s5, 0($s7)
       sw $s4, 0($s6)
-      
-      jal check_and_delete
-      
-      jal draw_capsule
 
+      # Adding links to linkboard
+      
+      la $t1, LINKS
+      lw $t2, ADDR_DSPL
+
+      sub $t3, $s6, $t2
+      sub $t4, $s7, $t2
+
+      # Getting link address
+      add $t3, $t1, $t3
+      add $t4, $t1, $t4
+
+      # Getting distance to other linked pixel
+      sub $t5, $s7, $s6
+      sub $t6, $s6, $s7
+
+      # Linking pixels
+      sw $t5, 0($t3)
+      sw $t6, 0($t4)
+
+
+      jal check_delete_and_drop
+      jal draw_capsule
+      jal draw_pre_capsule
       
       j not_landed
     not_landed:
     
-	# 4. Sleep
-    li $v0, 32
-    li $a0, 16
-    
-    syscall
 
     # 5. Go back to Step 1
     j game_loop
